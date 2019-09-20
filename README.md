@@ -1,8 +1,8 @@
 Data Structure
 
-- LinkedList
+- [LinkedList](./DataStructures/LinkedList)
 
-  - singlyLinkedList
+  - [singlyLinkedList](./DataStructures/LinkedList/singlyLinkedList)
 
     ```go
     func (list *singlyLinkedList) headInsert(val interface{})
@@ -13,7 +13,7 @@ Data Structure
     func (list *singlyLinkedList) printList()
     ```
 
-  - doublyLinkedList
+  - [doublyLinkedList](./DataStructures/LinkedList/doublyLinkedList)
 
     ```go
     func (list *doublyLinkedList) headInsert(val interface{})
@@ -24,16 +24,16 @@ Data Structure
     func (list *doublyLinkedList) printList()
     ```
 
-  - circularLinkedList
+  - [circularLinkedList](./DataStructures/LinkedList/circularLinkedList)
 
     ```go
     func convertCircular(singlylinkedlist *node)
     func traversal(circularlinkedlist *node)
     ```
 
-- Stack
+- [Stack](./DataStructures/Stack/)
 
-  - arrayStack
+  - [arrayStack](./DataStructures/Stack/arrayStack)
 
     ```go
     func (s *ArrayStack) IsEmpty() bool
@@ -42,7 +42,7 @@ Data Structure
     func (s *ArrayStack) Peek() Item
     ```
 
-  - linkedStack
+  - [linkedStack](./DataStructures/Stack/linkedStack)
 
     ```go
     func (s *LinkedStack) IsEmpty() bool
@@ -51,7 +51,7 @@ Data Structure
     func (s *LinkedStack) Peek() interface{}
     ```
 
-- Queue
+- [Queue](./DataStructures/Queue)
 
   ```go
   func (s *Queue) IsEmpty() bool
