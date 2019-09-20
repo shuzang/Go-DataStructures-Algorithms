@@ -1,11 +1,11 @@
-package main
+package arraystack
 
 import (
 	"fmt"
 	"testing"
 )
 
-var stack *Stack
+var stack *ArrayStack
 
 func init() {
 	stack = NewStack()
