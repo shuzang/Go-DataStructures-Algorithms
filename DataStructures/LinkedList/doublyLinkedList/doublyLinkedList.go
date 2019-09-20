@@ -1,22 +1,20 @@
 //Package doublylinkedlist is the implementation of doubly linked list using golang
 //Note:the first node's "prev" pointer is nil, because its previous node is head node
-//package doublylinkedlist
-
-package main
+package doublylinkedlist
 
 import "fmt"
 
-//Each node consist of at least three parts: value, prev and next pointer
+//node consist of three parts: value, prev and next pointer
 type node struct {
 	prev *node
-	val  int
+	val  interface{}
 	next *node
 }
 
 //头节点，head指向第一个节点，size为节点数目
 type doublyLinkedList struct {
-	len  int
-	next *node
+	length int
+	next   *node
 }
 
 //Initialize head and return the list address
@@ -25,87 +23,87 @@ func constructor() *doublyLinkedList {
 }
 
 //Insert node before the first node
-func (ll *doublyLinkedList) headInsert(val int) {
-	newNode := &node{nil, val, ll.next}
-	if ll.len != 0 {
-		ll.next.prev = newNode
+func (list *doublyLinkedList) headInsert(val interface{}) {
+	newNode := &node{nil, val, list.next}
+	if list.length != 0 {
+		list.next.prev = newNode
 	}
-	ll.next = newNode
-	ll.len++
+	list.next = newNode
+	list.length++
 }
 
 //Insert node after the last node
-func (ll *doublyLinkedList) tailInsert(val int) {
+func (list *doublyLinkedList) tailInsert(val interface{}) {
 	newNode := &node{nil, val, nil}
-	if ll.len == 0 {
-		ll.next = newNode
-		ll.len++
+	if list.length == 0 {
+		list.next = newNode
+		list.length++
 		return
 	}
-	cur := ll.next
+	cur := list.next
 	for cur.next != nil {
 		cur = cur.next
 	}
 	cur.next = newNode
 	newNode.prev = cur
-	ll.len++
+	list.length++
 }
 
 //Insert node before the index-th node
-func (ll *doublyLinkedList) insert(val int, index int) {
-	if index < 1 || index > ll.len {
+func (list *doublyLinkedList) insert(val interface{}, index int) {
+	if index < 1 || index > list.length {
 		fmt.Println("index invalid!")
 		return
 	}
 	if index == 1 {
-		ll.headInsert(val)
+		list.headInsert(val)
 		return
 	}
-	cur := ll.next
+	cur := list.next
 	for i := 1; i < index-1; i++ {
 		cur = cur.next
 	}
 	newNode := &node{cur, val, cur.next}
 	cur.next.prev = newNode
 	cur.next = newNode
-	ll.len++
+	list.length++
 }
 
 //Delete the index-th node
-func (ll *doublyLinkedList) delete(index int) {
-	if index < 1 || index > ll.len {
+func (list *doublyLinkedList) delete(index int) {
+	if index < 1 || index > list.length {
 		fmt.Println("index invalid!")
 		return
 	}
 	if index == 1 {
-		ll.next = ll.next.next
-		ll.next.prev = nil
-		ll.len--
+		list.next = list.next.next
+		list.next.prev = nil
+		list.length--
 		return
 	}
 
-	cur := ll.next
+	cur := list.next
 	for i := 1; i < index; i++ {
 		cur = cur.next
 	}
-	if index == ll.len {
+	if index == list.length {
 		cur.prev.next = nil
 		cur.prev = nil
-		ll.len--
+		list.length--
 		return
 	}
 	cur.prev.next = cur.next
 	cur.next.prev = cur.prev
-	ll.len--
+	list.length--
 }
 
 //Get the index-th node and return its value. if index invalid,return -1
-func (ll *doublyLinkedList) get(index int) int {
-	if index < 1 || index > ll.len {
+func (list *doublyLinkedList) get(index int) interface{} {
+	if index < 1 || index > list.length {
 		fmt.Println("index invalid!")
 		return -1
 	}
-	cur := ll.next
+	cur := list.next
 	for i := 1; i < index; i++ {
 		cur = cur.next
 	}
@@ -113,24 +111,10 @@ func (ll *doublyLinkedList) get(index int) int {
 }
 
 //Print the list
-func (ll *doublyLinkedList) printList() {
-	cur := ll.next
+func (list *doublyLinkedList) printList() {
+	cur := list.next
 	for ; cur.next != nil; cur = cur.next {
-		fmt.Printf("%d<->", cur.val)
+		fmt.Printf("%v<->", cur.val)
 	}
 	fmt.Println(cur.val)
-}
-
-func main() {
-
-	sll := constructor()
-
-	sll.tailInsert(2)
-	sll.headInsert(11)
-	sll.insert(3, 1)
-	sll.delete(3)
-	sll.printList()
-
-	fmt.Println(sll.len)
-	fmt.Println(sll.get(1))
 }

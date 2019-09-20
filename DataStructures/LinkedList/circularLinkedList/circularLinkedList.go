@@ -1,16 +1,14 @@
-/*circularlinkedlist can be singly linked list or doubly linked list.
+/*Package circularlinkedlist can be singly linked list or doubly linked list.
   Now, We only implement two functions here:
    - Convert singly linked list into circular linked list
-   - Circular linked list traversal
-*/
-//package circularlinkedlist
-package main
+   - Circular linked list traversal*/
+package circularlinkedlist
 
 import "fmt"
 
 //Node consist of value and pointer to next
 type node struct {
-	val  int
+	val  interface{}
 	next *node
 }
 
@@ -30,22 +28,5 @@ func traversal(circularlinkedlist *node) {
 		fmt.Printf("%v->", cur.val)
 		cur = cur.next
 	}
-	fmt.Printf("%v->%v", cur.val, cur.next.val)
-}
-
-//Create a singly linked list for test
-func createSingly(head *node) {
-	cur := head
-	for i := 2; i < 5; i++ {
-		newNode := &node{i, nil}
-		cur.next = newNode
-		cur = cur.next
-	}
-}
-
-func main() {
-	ll := &node{1, nil}
-	createSingly(ll)
-	convertCircular(ll)
-	traversal(ll)
+	fmt.Printf("%v->%v\n", cur.val, cur.next.val)
 }
