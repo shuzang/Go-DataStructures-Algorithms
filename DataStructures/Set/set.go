@@ -9,101 +9,99 @@ type Set struct {
 	item map[Item]bool
 }
 
-//Add add a Item to the Set, return a pointer to the Set.
-func (s *Set) Add(t Item) *Set {
-	if s.item == nil {
-		s.item = make(map[Item]bool)
-	}
-	if _, ok := s.item[t]; !ok {
-		s.item[t] = true
-	}
-	return s
-}
-
-//Clear remove all elements from the Set
-func (s *Set) Clear() {
-	s.item = make(map[Item]bool)
-}
-
-//Delete remove the item from the Set if has
-func (s *Set) Delete(t Item) {
-	if s.Has(t) {
-		delete(s.item, t)
-	}
-}
-
-//Has return true if the Set contains the item
-func (s *Set) Has(t Item) bool {
+//IsMember 判断元素是否是集合的成员
+func (s *Set) IsMember(t Item) bool {
 	_, ok := s.item[t]
 	return ok
 }
 
-//Traversal return all item stored
-func (s *Set) Traversal() []Item {
-	item := []Item{}
-	for i := range s.item {
-		item = append(item, i)
+//Insert 插入成功返回0，如果插入的成员在集合中已存在返回-1
+func (s *Set) Insert(t Item) interface{} {
+	if s.item == nil {
+		s.item = make(map[Item]bool)
 	}
-	return item
+	if !s.IsMember(t) {
+		s.item[t] = true
+		return 0
+	}
+	return -1
 }
 
-//Size of set
+//Remove 移除元素
+func (s *Set) Remove(t Item) {
+	if s.IsMember(t) {
+		delete(s.item, t)
+	}
+}
+
+//Clear 移除集合中的所有元素
+func (s *Set) Clear() {
+	s.item = make(map[Item]bool)
+}
+
+//Size 返回集合中元素的个数
 func (s *Set) Size() int {
 	return len(s.item)
 }
 
-// Union returns a new set with elements from both
-// the given sets
+// Union 求两个集合的并集
 func (s *Set) Union(s2 *Set) *Set {
-	s3 := Set{}
-	s3.item = make(map[Item]bool)
-	for i := range s.item {
-		s3.item[i] = true
+	tmps := Set{}
+	tmps.item = make(map[Item]bool)
+	for key := range s.item {
+		tmps.item[key] = true
 	}
-	for i := range s2.item {
-		_, ok := s3.item[i]
-		if !ok {
-			s3.item[i] = true
+	for key := range s2.item {
+		if _, ok := tmps.item[key]; !ok {
+			tmps.item[key] = true
 		}
 	}
-	return &s3
+	return &tmps
 }
 
-// Intersection returns a new set with elements that exist in
-// both sets
+// Intersection 求两个集合的交集
 func (s *Set) Intersection(s2 *Set) *Set {
-	s3 := Set{}
-	s3.item = make(map[Item]bool)
-	for i := range s2.item {
-		_, ok := s.item[i]
-		if ok {
-			s3.item[i] = true
+	tmps := Set{}
+	tmps.item = make(map[Item]bool)
+	for key := range s2.item {
+		if s.IsMember(key) {
+			tmps.item[key] = true
 		}
 	}
-	return &s3
+	return &tmps
 }
 
-// Difference returns a new set with all the elements that
-// exist in the first set and don't exist in the second set
+// Difference 求s和s2两个集合的差集
 func (s *Set) Difference(s2 *Set) *Set {
-	s3 := Set{}
-	s3.item = make(map[Item]bool)
-	for i := range s.item {
-		_, ok := s2.item[i]
-		if !ok {
-			s3.item[i] = true
+	tmps := Set{}
+	tmps.item = make(map[Item]bool)
+	for key := range s.item {
+		if !s2.IsMember(key) {
+			tmps.item[key] = true
 		}
 	}
-	return &s3
+	return &tmps
 }
 
-// Subset returns true if s is a subset of s2
+// Subset 判断s2是否是s的子集
 func (s *Set) Subset(s2 *Set) bool {
-	for i := range s.item {
-		_, ok := s2.item[i]
-		if !ok {
+	for key := range s2.item {
+		if !s.IsMember(key) {
 			return false
 		}
 	}
 	return true
+}
+
+//Equal 判断两个集合是否相等
+func (s *Set) Equal(s2 *Set) bool {
+	if len(s.item) == len(s2.item) {
+		for key := range s2.item {
+			if !s.IsMember(key) {
+				return false
+			}
+		}
+		return true
+	}
+	return false
 }
