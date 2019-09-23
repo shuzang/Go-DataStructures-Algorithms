@@ -16,7 +16,7 @@ func (s *Set) IsMember(t Item) bool {
 }
 
 //Insert 插入成功返回0，如果插入的成员在集合中已存在返回-1
-func (s *Set) Insert(t Item) interface{} {
+func (s *Set) Insert(t Item) int {
 	if s.item == nil {
 		s.item = make(map[Item]bool)
 	}
