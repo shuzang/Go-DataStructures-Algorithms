@@ -1,4 +1,4 @@
-package hashmap
+package chainedhashmap
 
 import "fmt"
 
@@ -13,7 +13,6 @@ type linkedlist struct {
 }
 
 type chainedHashMap struct {
-	hashMap
 	cap    int
 	bucket []*linkedlist
 }
