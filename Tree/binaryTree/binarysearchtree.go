@@ -145,7 +145,7 @@ func remove(node *Node, key int) (*Node, error) {
 }
 
 //Search 搜索树中与给定值相同的节点，若存在，返回true
-func (bst *BinarySearchTree) Search(node *Node, key int) (bool, error) {
+func (bst *BinarySearchTree) Search(key int) (bool, error) {
 	return search(bst.root, key)
 }
 
