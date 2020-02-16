@@ -29,7 +29,7 @@ func arrayToBinTree(nums []Item) *TreeNode {
 			}
 			i++
 		}
-		if i+1 < len(nums) {
+		if i < len(nums) {
 			if reflect.TypeOf(nums[i]) != nil {
 				root.Right = &TreeNode{nums[i].(int), nil, nil}
 				queue.PushBack(root.Right)
