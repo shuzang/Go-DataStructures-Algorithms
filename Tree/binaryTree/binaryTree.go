@@ -137,13 +137,12 @@ func postorderTraversal(root *TreeNode) []int {
 	for root != nil || stack.Len() != 0 {
 		for root != nil {
 			stack.PushBack(root)
-			tag[root] = true
 			root = root.Left
 		}
 		if stack.Len() != 0 {
 			root = stack.Back().Value.(*TreeNode)
-			if tag[root] {
-				tag[root] = false
+			if !tag[root] {
+				tag[root] = true
 				root = root.Right
 			} else {
 				root = stack.Remove(stack.Back()).(*TreeNode)
