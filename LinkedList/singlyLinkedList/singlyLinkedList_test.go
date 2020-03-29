@@ -5,48 +5,63 @@ import (
 	"testing"
 )
 
+//声明单链表
 var linkedlist *singlyLinkedList
 
+//所有测试函数执行前都需要初始化
 func init() {
 	linkedlist = &singlyLinkedList{0, nil}
 }
 
-func BenchmarkHeadInsert(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		linkedlist.headInsert(i)
-	}
+func TestAddAtHead(t *testing.T) {
+	linkedlist.AddAtHead(1)
+	linkedlist.PrintList()
+	// Output: 1
 }
 
-func BenchmarkTailInsert(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		linkedlist.tailInsert(i)
-	}
+func TestAddAtTail(t *testing.T) {
+	linkedlist.CreateList()
+	linkedlist.PrintList()
+	// Output: 0->1->2->3->4
+	linkedlist.AddAtTail(3)
+	linkedlist.PrintList()
+	// Output: 0->1->2->3->4->3
 }
 
-func TestInsert(t *testing.T) {
-	for i := 0; i < 10; i++ {
-		linkedlist.tailInsert(i)
-	}
-	linkedlist.insert("test", 3)
+func TestAddAtIndex(t *testing.T) {
+	linkedlist.CreateList()
+	linkedlist.PrintList()
+	// Output: 0->1->2->3->4
+	linkedlist.AddAtIndex(3, 3)
+	linkedlist.PrintList()
+	// Output: 0->1->3->2->3->4
 }
 
-func TestDelete(t *testing.T) {
-	for i := 10; i < 20; i++ {
-		linkedlist.tailInsert(i)
+func TestDeleteAtIndex(t *testing.T) {
+	linkedlist.CreateList()
+	linkedlist.PrintList()
+	// Output: 0->1->2->3->4
+
+	// //测试错误输出
+	// if err := linkedlist.DeleteAtIndex(6); err != nil {
+	// 	fmt.Printf("Error: %s\n", err)
+	// }
+
+	if err := linkedlist.DeleteAtIndex(5); err != nil {
+		fmt.Printf("Error: %s\n", err)
 	}
-	linkedlist.delete(5)
+	linkedlist.PrintList()
+	// Output: 0->1->2->3
 }
 
 func TestGet(t *testing.T) {
-	for i := 20; i < 30; i++ {
-		linkedlist.tailInsert(i)
+	linkedlist.CreateList()
+	//item, err := linkedlist.Get(6) // 测试错误输出
+	item, err := linkedlist.Get(3)
+	if err != nil {
+		fmt.Printf("Error: %s\n", err)
+		return
 	}
-	fmt.Println(linkedlist.get(7))
-}
-
-func TestPrintList(t *testing.T) {
-	for i := 30; i < 40; i++ {
-		linkedlist.tailInsert(i)
-	}
-	linkedlist.printList()
+	fmt.Println(item)
+	// Output: 2
 }
